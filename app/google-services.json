@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "609119930168",
+    "project_id": "inpi-albergues",
+    "storage_bucket": "inpi-albergues.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609119930168:android:75dda4c5a2ed24052723cd",
+        "android_client_info": {
+          "package_name": "com.juarez.inpialbergues"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609119930168-blc9a9f665195141qmohlpgjc06ldfl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMju2yvzx9AcSsVW0xrcQAHH5OKfov7S0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609119930168-blc9a9f665195141qmohlpgjc06ldfl5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
