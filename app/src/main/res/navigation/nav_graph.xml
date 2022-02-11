@@ -26,5 +26,22 @@
         android:id="@+id/housesFragment"
         android:name="com.juarez.inpialbergues.ui.houses.HousesFragment"
         android:label="casas"
-        tools:layout="@layout/fragment_houses" />
+        tools:layout="@layout/fragment_houses">
+        <action
+            android:id="@+id/action_housesFragment_to_saveEditFragment"
+            app:destination="@id/saveEditFragment" />
+        <action
+            android:id="@+id/action_housesFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/saveEditFragment"
+        android:name="com.juarez.inpialbergues.ui.saveeditHouse.SaveEditFragment"
+        android:label="save_edit"
+        tools:layout="@layout/fragment_save_edit" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.juarez.inpialbergues.ui.map.MapFragment"
+        android:label="map"
+        tools:layout="@layout/fragment_map" />
 </navigation>
