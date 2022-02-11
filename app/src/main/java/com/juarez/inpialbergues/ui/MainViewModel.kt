@@ -3,8 +3,9 @@ package com.juarez.inpialbergues.ui
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juarez.inpialbergues.data.HousesRepository
-import com.juarez.inpialbergues.models.House
+import com.juarez.inpialbergues.data.models.House
+import com.juarez.inpialbergues.domain.GetHousesUseCase
+import com.juarez.inpialbergues.domain.SaveHouseUseCase
 import com.juarez.inpialbergues.ui.houses.HousesState
 import com.juarez.inpialbergues.ui.saveeditHouse.SaveHouseState
 import com.juarez.inpialbergues.utils.Resource
@@ -15,7 +16,10 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: HousesRepository) : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val saveHouseUseCase: SaveHouseUseCase,
+    private val getHousesUseCase: GetHousesUseCase,
+) : ViewModel() {
 
     private val _housesState = MutableStateFlow<HousesState>(HousesState.Empty)
     val housesState = _housesState.asStateFlow()
@@ -23,7 +27,7 @@ class MainViewModel @Inject constructor(private val repository: HousesRepository
     val saveHouseState = _saveHouseState.asStateFlow()
 
     fun getHouses() {
-        repository.getHouses().onEach {
+        getHousesUseCase().onEach {
             when (it) {
                 is Resource.Loading -> _housesState.value = HousesState.Loading
                 is Resource.Success -> _housesState.value = HousesState.Success(it.data)
@@ -39,8 +43,8 @@ class MainViewModel @Inject constructor(private val repository: HousesRepository
         val dateFileName = dateFormatter.format(Date())
         val imageFileName = "${dateFileName}.${extension ?: "png"}"
 
-        repository.saveHouse(uri, imageFileName, newHouse).onEach { result ->
-            when (result) {
+        saveHouseUseCase(uri, imageFileName, newHouse).onEach {
+            when (it) {
                 is Resource.Loading -> {
                     _saveHouseState.value = SaveHouseState.Loading(true)
                 }

@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.juarez.inpialbergues.data.models.House
 import com.juarez.inpialbergues.databinding.ItemHouseBinding
-import com.juarez.inpialbergues.models.House
 import com.juarez.inpialbergues.utils.loadPhoto
 
 class HousesAdapter(private val onClickListener: (house: House) -> Unit) :

@@ -11,21 +11,22 @@ import android.webkit.MimeTypeMap
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.juarez.inpialbergues.data.models.House
 import com.juarez.inpialbergues.databinding.FragmentSaveEditBinding
-import com.juarez.inpialbergues.models.House
 import com.juarez.inpialbergues.ui.MainViewModel
 import com.juarez.inpialbergues.utils.Constants
 import com.juarez.inpialbergues.utils.PermissionResult
 import com.juarez.inpialbergues.utils.requestPermission
 import com.juarez.inpialbergues.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class SaveEditFragment : Fragment() {
 
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: MainViewModel by viewModels()
     private var _binding: FragmentSaveEditBinding? = null
     private val binding get() = _binding!!
     private var imageUri: Uri? = null
@@ -60,7 +61,9 @@ class SaveEditFragment : Fragment() {
                         binding.btnUpload.isEnabled = !it.isLoading
                     }
                     is SaveHouseState.Success -> {
-                        toast("guardado exitoso")
+                        toast("guardado correctamente")
+                        delay(1000)
+                        requireActivity().onBackPressed()
                     }
                 }
             }
@@ -90,7 +93,6 @@ class SaveEditFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             imageUri = uri
             imageUri?.let {
-                //showUploadButton(true)
                 binding.imgNewPhoto.setImageURI(it)
             }
         }

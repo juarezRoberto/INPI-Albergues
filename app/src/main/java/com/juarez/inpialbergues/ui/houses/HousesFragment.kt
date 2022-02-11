@@ -11,8 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.juarez.inpialbergues.data.models.House
 import com.juarez.inpialbergues.databinding.FragmentHousesBinding
-import com.juarez.inpialbergues.models.House
 import com.juarez.inpialbergues.ui.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

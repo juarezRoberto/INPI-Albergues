@@ -1,10 +1,10 @@
-package com.juarez.inpialbergues.data
+package com.juarez.inpialbergues.data.repository
 
 import android.net.Uri
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
-import com.juarez.inpialbergues.models.House
+import com.juarez.inpialbergues.data.models.House
 import com.juarez.inpialbergues.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class HousesRepository @Inject constructor(
-    private val firestore: FirebaseFirestore,
+    firestore: FirebaseFirestore,
     private val storage: FirebaseStorage,
 ) {
     private val collectionRef = firestore.collection("houses")

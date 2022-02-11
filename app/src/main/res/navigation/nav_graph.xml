@@ -29,10 +29,18 @@
         tools:layout="@layout/fragment_houses">
         <action
             android:id="@+id/action_housesFragment_to_saveEditFragment"
-            app:destination="@id/saveEditFragment" />
+            app:destination="@id/saveEditFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_housesFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
+            app:destination="@id/mapFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/saveEditFragment"

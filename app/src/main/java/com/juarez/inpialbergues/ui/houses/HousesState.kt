@@ -1,6 +1,6 @@
 package com.juarez.inpialbergues.ui.houses
 
-import com.juarez.inpialbergues.models.House
+import com.juarez.inpialbergues.data.models.House
 
 sealed class HousesState {
     object Loading : HousesState()
