@@ -5,4 +5,6 @@ data class House(
     val name: String = "",
     var url: String = "",
     val address: String = "",
+    val latitude: String = "",
+    val longitude: String = "",
 )

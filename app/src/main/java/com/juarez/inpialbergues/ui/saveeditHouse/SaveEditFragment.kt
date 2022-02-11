@@ -41,13 +41,27 @@ class SaveEditFragment : Fragment() {
         binding.btnUpload.setOnClickListener {
             val name = binding.outlinedHouseName.editText?.text
             val address = binding.outlinedHouseAddress.editText?.text
-            if (name.toString().isEmpty() || address.toString().isEmpty() || imageUri == null) {
+            val latitude = binding.outlinedHouseLatitude.editText?.text
+            val longitude = binding.outlinedHouseLongitude.editText?.text
+
+            if (
+                name.toString().isEmpty() || address.toString().isEmpty() ||
+                latitude.toString().isEmpty() || longitude.toString().isEmpty() ||
+                imageUri == null
+            ) {
                 toast("El nombre, la direccion y la imagen son requeridos")
             } else {
-                val newHouse = House(name = name.toString(), address = address.toString())
+                val newHouse = House(
+                    name = name.toString(),
+                    address = address.toString(),
+                    latitude = latitude.toString(),
+                    longitude = longitude.toString()
+                )
                 viewModel.saveHouse(newHouse, imageUri!!, getFileExtension(imageUri!!))
                 binding.outlinedHouseName.editText?.setText("")
                 binding.outlinedHouseAddress.editText?.setText("")
+                binding.outlinedHouseLatitude.editText?.setText("")
+                binding.outlinedHouseLongitude.editText?.setText("")
             }
         }
 
@@ -58,6 +72,8 @@ class SaveEditFragment : Fragment() {
                         binding.progressSavingHouse.isVisible = it.isLoading
                         binding.outlinedHouseName.isEnabled = !it.isLoading
                         binding.outlinedHouseAddress.isEnabled = !it.isLoading
+                        binding.outlinedHouseLatitude.isEnabled = !it.isLoading
+                        binding.outlinedHouseLongitude.isEnabled = !it.isLoading
                         binding.btnUpload.isEnabled = !it.isLoading
                     }
                     is SaveHouseState.Success -> {
