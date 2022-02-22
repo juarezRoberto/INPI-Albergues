@@ -5,12 +5,12 @@
       <map>
         <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/drawable/background_black_gradient.xml" value="0.2595" />
         <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/fragment_general_map.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/fragment_general_map.xml" value="0.4850894632206759" />
         <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/fragment_houses.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/fragment_map.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/fragment_save_edit.xml" value="0.2" />
-        <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/item_house.xml" value="0.4" />
+        <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/fragment_save_edit.xml" value="0.264" />
+        <entry key="..\:/Users/JUAREZ/Documents/myworkspace/android/INPIAlbergues/app/src/main/res/layout/item_house.xml" value="0.6" />
       </map>
     </option>
   </component>

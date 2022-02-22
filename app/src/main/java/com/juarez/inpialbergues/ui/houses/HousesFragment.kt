@@ -23,7 +23,7 @@ class HousesFragment : Fragment() {
     private var _binding: FragmentHousesBinding? = null
     private val binding get() = _binding!!
 
-    private val housesAdapter = HousesAdapter(::onClickListener)
+    private val housesAdapter = HousesAdapter({ onClickListener(it) }, { onEditListener(it) })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +61,12 @@ class HousesFragment : Fragment() {
     }
 
     private fun onClickListener(house: House) {
-        val action = HousesFragmentDirections.actionHousesFragmentToMapFragment()
+        val action = HousesFragmentDirections.actionHousesFragmentToMapFragment(house)
+        findNavController().navigate(action)
+    }
+
+    private fun onEditListener(house: House) {
+        val action = HousesFragmentDirections.actionHousesFragmentToSaveEditFragment(true, house)
         findNavController().navigate(action)
     }
 

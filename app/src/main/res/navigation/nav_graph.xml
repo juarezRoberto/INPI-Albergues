@@ -50,10 +50,24 @@
         android:id="@+id/saveEditFragment"
         android:name="com.juarez.inpialbergues.ui.saveeditHouse.SaveEditFragment"
         android:label="save_edit"
-        tools:layout="@layout/fragment_save_edit" />
+        tools:layout="@layout/fragment_save_edit">
+        <argument
+            android:name="isUpdating"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="house"
+            app:argType="com.juarez.inpialbergues.data.models.House"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.juarez.inpialbergues.ui.map.MapFragment"
         android:label="map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map">
+        <argument
+            android:name="house"
+            app:argType="com.juarez.inpialbergues.data.models.House" />
+    </fragment>
 </navigation>

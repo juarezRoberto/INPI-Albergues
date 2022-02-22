@@ -13,13 +13,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.juarez.inpialbergues.data.models.House
 import com.juarez.inpialbergues.databinding.FragmentSaveEditBinding
 import com.juarez.inpialbergues.ui.MainViewModel
-import com.juarez.inpialbergues.utils.Constants
-import com.juarez.inpialbergues.utils.PermissionResult
-import com.juarez.inpialbergues.utils.requestPermission
-import com.juarez.inpialbergues.utils.toast
+import com.juarez.inpialbergues.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
@@ -27,6 +25,7 @@ import kotlinx.coroutines.delay
 class SaveEditFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
+    private val args: SaveEditFragmentArgs by navArgs()
     private var _binding: FragmentSaveEditBinding? = null
     private val binding get() = _binding!!
     private var imageUri: Uri? = null
@@ -38,6 +37,16 @@ class SaveEditFragment : Fragment() {
         _binding = FragmentSaveEditBinding.inflate(inflater, container, false)
         binding.imgNewPhoto.setOnClickListener { requestPermissions() }
 
+        if (args.isUpdating && args.house != null) {
+            args.house?.let {
+                binding.imgNewPhoto.loadPhoto(it.url)
+                binding.outlinedHouseName.editText?.setText(it.name)
+                binding.outlinedHouseAddress.editText?.setText(it.address)
+                binding.outlinedHouseLatitude.editText?.setText(it.latitude)
+                binding.outlinedHouseLongitude.editText?.setText(it.longitude)
+            }
+        }
+
         binding.btnUpload.setOnClickListener {
             val name = binding.outlinedHouseName.editText?.text
             val address = binding.outlinedHouseAddress.editText?.text
@@ -46,10 +55,9 @@ class SaveEditFragment : Fragment() {
 
             if (
                 name.toString().isEmpty() || address.toString().isEmpty() ||
-                latitude.toString().isEmpty() || longitude.toString().isEmpty() ||
-                imageUri == null
+                latitude.toString().isEmpty() || longitude.toString().isEmpty()
             ) {
-                toast("El nombre, la direccion y la imagen son requeridos")
+                toast("Todos los datos son requeridos")
             } else {
                 val newHouse = House(
                     name = name.toString(),
@@ -57,25 +65,28 @@ class SaveEditFragment : Fragment() {
                     latitude = latitude.toString(),
                     longitude = longitude.toString()
                 )
-                viewModel.saveHouse(newHouse, imageUri!!, getFileExtension(imageUri!!))
-                binding.outlinedHouseName.editText?.setText("")
-                binding.outlinedHouseAddress.editText?.setText("")
-                binding.outlinedHouseLatitude.editText?.setText("")
-                binding.outlinedHouseLongitude.editText?.setText("")
+                if (args.isUpdating) {
+                    resetInputs()
+                    args.house?.let {
+                        viewModel.updateHouse(
+                            newHouse.copy(id = it.id, url = it.url),
+                            imageUri,
+                            getFileExtension(imageUri)
+                        )
+                    }
+                } else {
+                    imageUri?.let {
+                        resetInputs()
+                        viewModel.saveHouse(newHouse, it, getFileExtension(it))
+                    } ?: toast("La imagen es requerida")
+                }
             }
         }
 
         lifecycleScope.launchWhenStarted {
             viewModel.saveHouseState.collect {
                 when (it) {
-                    is SaveHouseState.Loading -> {
-                        binding.progressSavingHouse.isVisible = it.isLoading
-                        binding.outlinedHouseName.isEnabled = !it.isLoading
-                        binding.outlinedHouseAddress.isEnabled = !it.isLoading
-                        binding.outlinedHouseLatitude.isEnabled = !it.isLoading
-                        binding.outlinedHouseLongitude.isEnabled = !it.isLoading
-                        binding.btnUpload.isEnabled = !it.isLoading
-                    }
+                    is SaveHouseState.Loading -> whenLoading(it.isLoading)
                     is SaveHouseState.Success -> {
                         toast("guardado correctamente")
                         delay(1000)
@@ -84,7 +95,36 @@ class SaveEditFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.updateHouseState.collect {
+                when (it) {
+                    is UpdateHouseState.Loading -> whenLoading(it.isLoading)
+                    is UpdateHouseState.Success -> {
+                        toast("actualizado correctamente")
+                        delay(1000)
+                        requireActivity().onBackPressed()
+                    }
+                }
+            }
+        }
         return binding.root
+    }
+
+    private fun whenLoading(isLoading: Boolean) {
+        binding.progressSavingHouse.isVisible = isLoading
+        binding.outlinedHouseName.isEnabled = !isLoading
+        binding.outlinedHouseAddress.isEnabled = !isLoading
+        binding.outlinedHouseLatitude.isEnabled = !isLoading
+        binding.outlinedHouseLongitude.isEnabled = !isLoading
+        binding.btnUpload.isEnabled = !isLoading
+    }
+
+    private fun resetInputs() {
+        binding.outlinedHouseName.editText?.setText("")
+        binding.outlinedHouseAddress.editText?.setText("")
+        binding.outlinedHouseLatitude.editText?.setText("")
+        binding.outlinedHouseLongitude.editText?.setText("")
     }
 
     private val requestPermissionLauncher =
@@ -127,7 +167,8 @@ class SaveEditFragment : Fragment() {
         builder.show()
     }
 
-    private fun getFileExtension(imageUri: Uri): String? {
+    private fun getFileExtension(imageUri: Uri?): String? {
+        if (imageUri == null) return null
         val resolver = requireContext().contentResolver
         val mime = MimeTypeMap.getSingleton()
         return mime.getExtensionFromMimeType(resolver.getType(imageUri))
