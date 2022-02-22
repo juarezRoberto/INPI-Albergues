@@ -51,6 +51,7 @@ class HousesRepository @Inject constructor(
         flow {
             emit(Resource.Loading)
             if (uri != null) {
+                fileName.toString()
                 // delete and upload new photo
             }
             val query = collectionRef.whereEqualTo("id", house.id).get().await()
