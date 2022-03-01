@@ -60,7 +60,7 @@ class GeneralMapFragment : Fragment(), OnMapReadyCallback {
         map?.uiSettings?.isZoomControlsEnabled = true
         val zongolica = LatLng(18.6667, -96.9833)
         map?.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(zongolica, 12f), 2000, null
+            CameraUpdateFactory.newLatLngZoom(zongolica, 10f), 2000, null
         )
         map?.addMarker(MarkerOptions().position(zongolica))
         viewModel.getHouses()
